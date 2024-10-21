@@ -15,6 +15,20 @@ describe("application", () => {
     mcache.clear();
   });
 
+  it("should return error if symbols parameter is not passed", async () => {
+    await request(app)
+      .get("/")
+      .expect("Content-Type", /application\/json/)
+      .expect(400);
+  });
+
+  it("should return error if symbols parameter is empty", async () => {
+    await request(app)
+      .get("/?symbols")
+      .expect("Content-Type", /application\/json/)
+      .expect(400);
+  });
+
   it("should return json format", async () => {
     await request(app)
       .get("/?symbols=A,B,C")

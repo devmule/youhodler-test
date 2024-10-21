@@ -13,7 +13,10 @@ app.get("/", async (req, res) => {
     res.json({ message: 'Parameter "symbols" is not provided!' });
     return;
   }
-  const symbols: string[] = req.query.symbols.split(",");
+  const symbols: string[] = req.query.symbols
+    .split(",")
+    .map((val) => val.trim())
+    .filter((val) => !!val);
   if (symbols.length === 0) {
     res.status(400);
     res.json({ message: "At least one symbol should be provided!" });
